@@ -1,85 +1,80 @@
-# React + TypeScript + Vite
+# Dragon Trainer Academy — Instructors Remote
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Micro-frontend that powers the instructors experience in Dragon Trainer Academy.
 
-Currently, two official plugins are available:
+This remote exposes pages consumed by the host application:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Instructors listing
+- Instructor profile
+- Class schedule / booking page
 
-## React Compiler
+## Stack
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- React 19 + TypeScript + Vite
+- Tailwind CSS 4
+- React Router 7
+- Day.js
+- js-cookie
+- React Toastify
+- `@originjs/vite-plugin-federation`
 
-Note: This will impact Vite dev & build performances.
+## Exposed federation modules
 
-## Expanding the ESLint configuration
+Configured in `vite.config.ts`:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- `./InstructorsPage` → `src/pages/Instructors/index.tsx`
+- `./InstructorProfile` → `src/pages/InstructorProfile/index.tsx`
+- `./SchedulePage` → `src/pages/SchedulePage/index.tsx`
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Remote entry is served at:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Dev/Preview: `http://localhost:5001/remoteEntry.js`
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+## Local development
+
+### Install dependencies
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Start dev server
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```bash
+npm run dev
 ```
 
-## Deploying as a remote (Tailwind CSS not loading)
+Runs on `http://localhost:5001`.
 
-If this app is consumed remotely (module federation), avoid hardcoded localhost asset URLs.
+### Build and preview as remote
 
-- Configure the base path with `VITE_BASE_URL`.
-- Example for root deploy: `VITE_BASE_URL=/`
-- Example for subpath deploy: `VITE_BASE_URL=/dta-instructors/`
+```bash
+npm run build
+npm run serve
+```
 
-The Vite config already reads this value and falls back to `/`.
+## Scripts
+
+- `npm run dev` — start dev server
+- `npm run build` — TypeScript build + production bundle
+- `npm run remote` — build then preview on `5001`
+- `npm run dev:watch` — build in watch mode
+- `npm run serve` — preview on `5001` (`--strictPort`)
+- `npm run preview` — Vite preview
+- `npm run lint` — run ESLint
+
+## Environment variable
+
+`VITE_BASE_URL` controls generated asset URLs for federated usage.
+
+Examples:
+
+- Root deploy: `VITE_BASE_URL=/`
+- Subpath deploy: `VITE_BASE_URL=/dta-instructors/`
+
+If not set, it falls back to `http://localhost:5001/`.
+
+## Notes
+
+- Bookings are stored in cookies and consumed through `BookingsContext`.
+- This app can run standalone or be loaded through `dta-host`.
