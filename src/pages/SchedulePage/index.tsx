@@ -1,18 +1,19 @@
-// src/pages/Instructors/SchedulePage.tsx
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Cookies from 'js-cookie';
 import dayjs from 'dayjs';
 
-import { useBookings } from '@/context/BookingsContext';
+import { useBookings, BookingsProvider } from '@/context/BookingsContext';
 
 import InstructorData from '@/contents/InstructorData';
 import { bookRandomClass } from './utils';
 
+import '@/index.css';
+
 const hours = Array.from({ length: 10 }, (_, i) => `${(8 + i).toString().padStart(2, '0')}:00`);
 
-const SchedulePage = () => {
+const SchedulePageContent = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const { bookings, bookClass, cancelBooking, bookMultipleClasses } = useBookings();
@@ -89,11 +90,13 @@ const SchedulePage = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
+    <div className="max-w-6xl mx-auto p-6 text-gray-800">
       <div className="flex justify-between items-center mb-8">
         <div className="w-full flex flex md:flex-row md:items-center gap-4">
           <div>
-            <h1 className="text-4xl font-bold">Book a class with {instructor.name}</h1>
+            <h1 className="text-4xl font-bold text-gray-800">
+              Book a class with {instructor.name}
+            </h1>
             <p className="text-gray-600 mt-2">Choose day and time (08:00 – 17:00)</p>
           </div>
           <div className="w-2/5 flex align-end flex-col md:flex-row items-end gap-4">
@@ -180,6 +183,14 @@ const SchedulePage = () => {
         </table>
       </div>
     </div>
+  );
+};
+
+const SchedulePage = () => {
+  return (
+    <BookingsProvider>
+      <SchedulePageContent />
+    </BookingsProvider>
   );
 };
 

@@ -48,6 +48,7 @@ export const BookingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   const bookClass = (instructorName: string, date: dayjs.Dayjs, time: string) => {
+    console.log('Booking class for', instructorName, date.format('YYYY-MM-DD'), time);
     const user = Cookies.get('user');
 
     const newBooking: Booking = {

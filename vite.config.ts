@@ -17,10 +17,10 @@ export default defineConfig(({ mode }) => {
         filename: 'remoteEntry.js',
         exposes: {
           './InstructorsPage': './src/pages/Instructors/index.tsx',
-          './InstructorProfile': './src/pages/Instructors/InstructorProfile.tsx',
-          './SchedulePage': './src/pages/Instructors/SchedulePage.tsx',
+          './InstructorProfile': './src/pages/InstructorProfile/index.tsx',
+          './SchedulePage': './src/pages/SchedulePage/index.tsx',
         },
-        shared: ['react', 'react-dom', 'react-router-dom'],
+        shared: ['react', 'react-dom', 'react-router-dom', 'react-toastify'],
       }),
     ],
     resolve: {
