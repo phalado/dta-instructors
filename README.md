@@ -16,7 +16,7 @@ This remote exposes pages consumed by the host application:
 - Day.js
 - js-cookie
 - React Toastify
-- `@originjs/vite-plugin-federation`
+- `Zephyr`
 
 ## Exposed federation modules
 

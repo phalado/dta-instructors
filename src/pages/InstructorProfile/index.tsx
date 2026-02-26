@@ -19,7 +19,7 @@ const InstructorProfile = () => {
       <p className="w-1/2 text-xl font-bold my-4 mx-auto">{instructor.bio}</p>
       <div className="flex">
         <img
-          src={instructor.instImage}
+          src={new URL(instructor.instImage, import.meta.url).href}
           alt={instructor.name}
           className="mx-auto mt-4 mb-6 w-1/3 rounded-sm"
         />
@@ -27,7 +27,7 @@ const InstructorProfile = () => {
           <h3 className="text-2xl font-bold">Dragon Name: {instructor.dragonName}</h3>
           <p className="text-lg font-bold">Dragon Type: {instructor.dragonType}</p>
           <img
-            src={instructor.dragonImage}
+            src={new URL(instructor.dragonImage, import.meta.url).href}
             alt={instructor.dragonName}
             className="mx-auto mt-4 mb-6 w-full rounded-sm"
           />
@@ -36,7 +36,7 @@ const InstructorProfile = () => {
       <div className="mt-6 gap-4 flex justify-center">
         <button
           className="px-4 py-2 bg-blue-500 text-xs text-white rounded hover:bg-blue-600 cursor-pointer"
-          onClick={() => navigate(`/instructors/${instructor.slug}/schedule`)}
+          onClick={() => navigate(`schedule`)}
         >
           Schedule a Class
         </button>

@@ -20,17 +20,17 @@ const Instructors = () => {
           >
             <h3 className="h-1/8 text-lg font-bold content-center">{inst.name}</h3>
             <div className="h-7/8 flex flex-col justify-end items-center">
-              <img src={inst.instImage} alt={inst.name} className="h-7/10" />
+              <img src={new URL(inst.instImage, import.meta.url).href} alt={inst.name} className="h-7/10" />
               <div className="mt-2 flex gap-2 h-10">
                 <button
                   className="mt-2 px-4 py-2 bg-blue-500 text-xs text-white rounded hover:bg-blue-600 cursor-pointer"
-                  onClick={() => navigate('/instructors/' + inst.slug)}
+                  onClick={() => navigate(inst.slug)}
                 >
                   View Profile
                 </button>
                 <button
                   className="mt-2 px-4 py-2 bg-blue-500 text-xs text-white rounded hover:bg-blue-600 cursor-pointer"
-                  onClick={() => navigate(`/instructors/${inst.slug}/schedule`)}
+                  onClick={() => navigate(`${inst.slug}/schedule`)}
                 >
                   Schedule a Class
                 </button>
